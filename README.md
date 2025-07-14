@@ -12,5 +12,7 @@
 4. make dark mode
 ## **WHAT TO FIGURE OUT**
 [ ] how to get the date for block that are not stored i.e unchecked blocks
+
 [ ] how to extract the day from the date and put it in a corresponding row
+
 [ ] how to store the data?? DB | cookies?
