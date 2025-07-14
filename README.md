@@ -1,38 +1,16 @@
-# sv
-
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
-
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
-
-```bash
-# create a new project in the current directory
-npx sv create
-
-# create a new project in my-app
-npx sv create my-app
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+# HABIT KIT CLONE
+## Backend
+1. store blocks that are checked only
+2. make a block when the routine is made
+3. when page loads -> get the current date, render every block from first init to yesterday with each loop
+4. block will be uploaded every 10 mins? 
+5. block stored in cookies ??
+## Frontend 
+1. each row indicates a day (row 1 = monday ...)
+2. render every block except the today block in a each loop
+3. render the today block outside loop for easy manipulation
+4. make dark mode
+## **WHAT TO FIGURE OUT**
+[ ] how to get the date for block that are not stored i.e unchecked blocks
+[ ] how to extract the day from the date and put it in a corresponding row
+[ ] how to store the data?? DB | cookies?

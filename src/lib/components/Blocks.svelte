@@ -6,7 +6,7 @@
         day
     } : {
         checked: boolean, 
-        tgl: string, 
+        tgl: string,
         day: string
     }= $props();
 

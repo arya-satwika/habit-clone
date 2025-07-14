@@ -1,13 +1,37 @@
 <script lang="ts">
     import Blocks from "$lib/components/Blocks.svelte";
     import Container from "$lib/components/Container.svelte";
-    import { getCurrentDate } from "index.ts";
+    import { getCurrentDate } from "./index.ts";
     let date:string = getCurrentDate();
+
+    const dictDate = new Map<number, string>([
+        [1, "Monday"],
+        [2, "Tuesday"],
+        [3, "Wednesday"],
+        [4, "Thursday"],
+        [5, "Friday"],
+        [6, "Saturday"],
+        [7, "Sunday"]
+    ]);
+
+
+    let dummyDate: Date[] = [
+        new Date("September 25, 2023"),
+        new Date("October 2, 2023"),
+        new Date("October 23, 2023"),
+        new Date("October 19, 2023"),
+        new Date("October 5, 2023"),
+        new Date("October 6, 2023"),
+        new Date("October 7, 2023")
+    ];
+    let someDate:Date = new Date();
+    const thisDay = (date:Date) => { return dictDate.get(date.getDay()) || "Unknown"; }
 </script>
 
 <h1>Welcome to SvelteKit</h1>
 
     <Container>
-        <Blocks checked={true} tgl="soasodk" day="Monday" />
-        <Blocks checked={true} tgl="dwdqweqw" day="shit" />
+        {#each dummyDate as date}
+            <Blocks checked={false} tgl={date.toDateString()} day={thisDay(date)} />
+        {/each}
     </Container>

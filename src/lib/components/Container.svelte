@@ -2,7 +2,7 @@
     let { children } = $props();
 </script>
 
-<div class ="container mx-auto p-4 flex flex-row items-start ">
+<div class ="container mx-auto p-4 grid-flow-col items-start ">
     <h4 class="text-2xl font-bold mb-4 py-4 px-4">Mon</h4>
     <h4 class="text-2xl font-bold mb-4 py-4 px-4">Tue</h4>
     <h4 class="text-2xl font-bold mb-4 py-4 px-4">Wed</h4>
