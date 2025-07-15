@@ -25,13 +25,22 @@
         new Date("October 7, 2023")
     ];
     let someDate:Date = new Date();
-    const thisDay = (date:Date) => { return dictDate.get(date.getDay()) || "Unknown"; }
+
+    interface RoutineData {
+        name: string,
+        id: string,
+        startDate: string
+    }
+    let routineData: RoutineData[] = $state([
+        {
+            name: "Someload",
+            id: "12345",
+            startDate: "2025-01-25",
+        }
+    ]);
 </script>
 
 <h1>Welcome to SvelteKit</h1>
-
-    <Container>
-        {#each dummyDate as date}
-            <Blocks checked={false} tgl={date.toDateString()} day={thisDay(date)} />
-        {/each}
-    </Container>
+{#each routineData as routine}
+    <Container startDate={routine.startDate} routineName={routine.name} />
+{/each}

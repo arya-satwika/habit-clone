@@ -7,3 +7,4 @@ export function getCurrentDay(): number {
     const date = new Date();
     return date.getDay(); // Returns the current day of the week
 }
+
