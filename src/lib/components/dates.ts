@@ -1,3 +1,13 @@
+export interface CheckedBlocksMap {
+    [date: string]: boolean;
+}
+export interface RoutineData {
+        name: string,
+        id: string,
+        startDate: string,
+        checkedBlocks: CheckedBlocksMap
+}
+
 export function getArrOfDates( start:Date, end:Date ): Date[] {
     const dates: Date[] = [];
     let currentDate = new Date(start);

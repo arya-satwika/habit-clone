@@ -1,7 +1,8 @@
 <script lang="ts">
-    import type { Snippet } from "svelte"
+    import { onMount, type Snippet } from "svelte"
     import { getArrOfDates } from "./dates";
     import Blocks from "$lib/components/Blocks.svelte";
+    import type { CheckedBlocksMap } from "$lib/components/dates";
 
     const dictDate = new Map<number, string>([
         [1, "Monday"],
@@ -15,28 +16,48 @@
     
     let { 
         routineName = "My Routine",
-        startDate
+        startDate,
+        checkedBlocks
      }: {
         routineName: string
         startDate: string
+        checkedBlocks: CheckedBlocksMap
      } = $props();
 
+    
+    let currentDateCheck: boolean = $state(false);
     const currentDate:Date = new Date();
+    
+    
+    $effect(() => {
+        const key:string = currentDate.toISOString().slice(0, 10);
+        if (currentDateCheck) {
+            checkedBlocks[key] = true;
+        } else {
+            delete checkedBlocks[key];
+        }
+    });
+    
     const yesterday:Date = new Date(currentDate);
     yesterday.setDate(currentDate.getDate() - 1);
     const start:Date = new Date(startDate);
-    let currentDateCheck: boolean = $state(false);
-
+    
+    
     const arrayOfDates:Date[] = getArrOfDates(start, yesterday);
+
+    onMount(() => {
+        // This will run when the component is mounted
+        console.log("Container component mounted");
+    });
 
 </script>
 
 <div class ="container mx-auto z-30 p-4 grid-flow-col items-start bg-slate-300 rounded-lg">
     <h1 class= "text-xl font-bold pb-3">{routineName}</h1>
-    <div class="overflow-x-auto">
+    <div class="overflow-x-auto bg-gray-100 p-4 rounded-lg">
         <div 
-         id="blocks-container" 
-         class="grid grid-rows-7 grid-flow-col justify-end place-items-center gap-1 bg-gray-100 p-4 rounded-lg shadow-md min-w-max"
+         id="grid-of-blocks" 
+         class="grid grid-rows-7 grid-flow-col justify-end place-items-center gap-1 min-w-max"
          >
             <!-- <h4 class="text-sm font-bold mb-1 py-1 px-1">Mon</h4>
             <h4 class="text-sm font-bold mb-1 py-1 px-1">Tue</h4>
@@ -59,5 +80,5 @@
     <button
      onclick={() => { currentDateCheck = !currentDateCheck }}
      class="mt-4 px-4 py-2 bg-blue-500 cursor-pointer"
-     >Shit</button>
+     >Toggle</button>
 </div>

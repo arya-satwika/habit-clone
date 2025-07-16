@@ -1,10 +1,11 @@
 # HABIT KIT CLONE
 ## Backend
 1. store blocks that are checked only
-2. make a block when the routine is made
-3. when page loads -> get the current date, render every block from first init to yesterday with each loop
-4. block will be uploaded every 10 mins? 
-5. block stored in cookies ??
+2. load 70ish blocks
+3. render 7 blocks at a time
+4. when page loads -> get the current date, render every block from first init to yesterday with each loop
+5. block will be uploaded every 10 mins? 
+6. block stored in cookies ??
 ## Frontend 
 1. each row indicates a day (row 1 = monday ...)
 2. render every block except the today block in a each loop

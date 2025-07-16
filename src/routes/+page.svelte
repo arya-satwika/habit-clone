@@ -1,8 +1,6 @@
 <script lang="ts">
-    import Blocks from "$lib/components/Blocks.svelte";
     import Container from "$lib/components/Container.svelte";
-    import { getCurrentDate } from "./index.ts";
-    let date:string = getCurrentDate();
+    import type { RoutineData } from "$lib/components/dates";
 
     const dictDate = new Map<number, string>([
         [1, "Monday"],
@@ -13,34 +11,81 @@
         [6, "Saturday"],
         [7, "Sunday"]
     ]);
-
-
-    let dummyDate: Date[] = [
-        new Date("September 25, 2023"),
-        new Date("October 2, 2023"),
-        new Date("October 23, 2023"),
-        new Date("October 19, 2023"),
-        new Date("October 5, 2023"),
-        new Date("October 6, 2023"),
-        new Date("October 7, 2023")
-    ];
-    let someDate:Date = new Date();
-
-    interface RoutineData {
-        name: string,
-        id: string,
-        startDate: string
+    let showForm: boolean = $state(false);
+    let theName: string = $state("");
+    function focusRoutineInput(node: HTMLElement) {
+        $effect(()=> {
+            const input = document.getElementById("routine-name");
+            if (input) {
+                input.focus();
+            }
+        })
     }
+
     let routineData: RoutineData[] = $state([
         {
             name: "Someload",
             id: "12345",
             startDate: "2025-01-25",
+            checkedBlocks: {
+                "2025-01-25": true,
+                "2025-01-26": false,
+                "2025-01-27": true,
+                "2025-01-28": false,
+                "2025-01-29": true,
+                "2025-01-30": false,
+                "2025-01-31": true
+            }
         }
     ]);
+    
+    function addRoutine( name:string ): RoutineData {
+        return {
+            name: name,
+            id: Math.random().toString(36).substring(2, 15),
+            startDate: new Date().toISOString().slice(0, 10),
+            checkedBlocks: {}
+        };
+    }
 </script>
 
-<h1>Welcome to SvelteKit</h1>
+{#snippet addARoutine()}
+    <form action="" class="mb-4 p-4" use:focusRoutineInput>
+        <label for="routine-name">Routine Name:</label>
+        <input 
+         type="text" 
+         id="routine-name"
+         bind:value={theName} 
+         class="border p-2 rounded-lg w-full mb-2"
+        />
+        <button 
+        class="cursor-pointer" 
+        type="submit" 
+        onclick={() => { 
+            routineData.push(addRoutine(theName)); 
+            showForm = false;
+            theName = "";
+        }}
+        >Add Routine</button>
+    </form>
+{/snippet}
+
 {#each routineData as routine}
-    <Container startDate={routine.startDate} routineName={routine.name} />
+    <div class="mb-4 py-4">
+        <Container 
+        startDate={routine.startDate} 
+        routineName={routine.name} 
+        checkedBlocks={routine.checkedBlocks} />
+    </div>
 {/each}
+<div class="text-center min-w-screen p-4">
+    <button class="cursor-pointer bg-blue-500 p-2" type="button" onclick={() => { 
+        theName = "";
+        showForm = !showForm;
+    }}>
+        Add a new routine
+    </button>
+    {#if showForm}
+        {@render addARoutine()}
+    {/if}
+</div>
