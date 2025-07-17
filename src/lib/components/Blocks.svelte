@@ -1,19 +1,19 @@
 <script lang="ts">
     import tippy, { type Instance } from 'tippy.js';
     let { 
-        checked=false, 
+        isChecked=false, 
         tgl, 
         day,
-        dummy=false
+        isDummy=false
     } : {
-        checked: boolean, 
+        isChecked: boolean, 
         tgl: string,
         day: string,
-        dummy: boolean
+        isDummy: boolean
     } = $props();
 
     function tooltip(node: HTMLElement) {
-        if (!dummy){
+        if (!isDummy){
             $effect(() => {
                 const tooltip:Instance = tippy(node, {
                     duration: 10,
@@ -32,9 +32,9 @@
 <div 
     class="w-10 h-10 rounded-lg flex items-center justify-center"
     id="Block"
-    class:bg-red-900={checked && !dummy}
-    class:bg-red-100={!checked && !dummy}
-    class:bg-transparent={dummy}
+    class:bg-red-900={isChecked && !isDummy}
+    class:bg-red-100={!isChecked && !isDummy}
+    class:bg-transparent={isDummy}
     use:tooltip
 >
 

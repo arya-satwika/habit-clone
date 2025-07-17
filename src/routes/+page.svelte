@@ -1,6 +1,6 @@
 <script lang="ts">
     import Container from "$lib/components/Container.svelte";
-    import type { RoutineData, dictDate } from "$lib/dates";
+    import type { RoutineData } from "$lib/dates";
 
     let { data } = $props();
     let showForm: boolean = $state(false);
@@ -12,7 +12,26 @@
         })
     }
 
-    let routineData: RoutineData[] = $state( data.routineData );
+    let routineData: RoutineData[] = $state([
+        {
+            name: "Morning Routine",
+            id: "1",
+            startDate: "2025-06-01",
+            checkedBlocks: {
+                "2025-06-10": true,
+                "2025-06-20": true
+            }
+        },
+        {
+            name: "Evening Routine",
+            id: "2",
+            startDate: "2025-06-01",
+            checkedBlocks: {
+                "2025-06-11": true,
+                "2025-06-21": true
+            }
+        }
+    ]);
     
     function addRoutine( name:string ): RoutineData {   
         return {
@@ -22,9 +41,6 @@
             checkedBlocks: {}
         };
     }
-    $effect(() => {
-        localStorage.setItem('routineData', JSON.stringify(routineData));
-    });
 </script>
 
 {#snippet addARoutine()}
@@ -48,6 +64,7 @@
         >Add Routine</button>
     </form>
 {/snippet}
+
 
 {#each routineData as routine}
     <div class="mb-4 py-4">

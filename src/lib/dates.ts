@@ -8,14 +8,12 @@ export const dictDate = new Map<number, string>([
         [7, "Sunday"]
     ]);
 
-export interface CheckedBlocksMap {
-    [date: string]: boolean;
-}
+    
 export interface RoutineData {
         name: string,
         id: string,
         startDate: string,
-        checkedBlocks: CheckedBlocksMap
+        checkedBlocks: {},
 }
 
 export function getArrOfDates( start:Date, end:Date ): Date[] {

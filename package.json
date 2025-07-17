@@ -13,7 +13,7 @@
 		"format": "prettier --write .",
 		"lint": "prettier --check . && eslint .",
 		"db:push": "drizzle-kit push",
-		"db:migrate": "drizzle-kit migrate",
+		"db:migrate": "node ./src/lib/server/db/migrate.ts",
 		"db:studio": "drizzle-kit studio"
 	},
 	"devDependencies": {
@@ -26,7 +26,8 @@
 		"@tailwindcss/typography": "^0.5.15",
 		"@tailwindcss/vite": "^4.0.0",
 		"@types/node": "^22",
-		"drizzle-kit": "^0.30.2",
+		"@types/ws": "^8.18.1",
+		"drizzle-kit": "^0.30.6",
 		"eslint": "^9.18.0",
 		"eslint-config-prettier": "^10.0.1",
 		"eslint-plugin-svelte": "^3.0.0",
@@ -43,7 +44,9 @@
 	},
 	"dependencies": {
 		"@neondatabase/serverless": "^0.10.4",
-		"drizzle-orm": "^0.40.0",
-		"tippy.js": "^6.3.7"
+		"dotenv": "^17.2.0",
+		"drizzle-orm": "^0.40.1",
+		"tippy.js": "^6.3.7",
+		"ws": "^8.18.3"
 	}
 }

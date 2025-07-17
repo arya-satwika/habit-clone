@@ -2,7 +2,6 @@
     import { onMount, type Snippet } from "svelte"
     import { getArrOfDates } from "../dates";
     import Blocks from "$lib/components/Blocks.svelte";
-    import type { CheckedBlocksMap } from "$lib/dates";
 
     const dictDate = new Map<number, string>([
         [1, "Monday"],
@@ -21,7 +20,7 @@
      }: {
         routineName: string
         startDate: string
-        checkedBlocks: CheckedBlocksMap
+        checkedBlocks: {[key: string]: boolean}
      } = $props();
 
     function focusOnThis(node: HTMLElement) {
@@ -74,26 +73,26 @@
                 {#each arrayOfDates as date}
                     {#if date < start}
                         <Blocks
-                        checked={false}
+                        isChecked={false}
                         tgl={date.toDateString()} 
                         day={ dictDate.get(date.getDay()) || "Unknown" }
-                        dummy={true}
+                        isDummy={true}
                         />
                     {:else}
                         <Blocks
-                        checked={checkedBlocks[date.toISOString().slice(0, 10)] || false}
+                        isChecked={checkedBlocks[date.toISOString().slice(0, 10)] || false}
                         tgl={date.toDateString()} 
                         day={ dictDate.get(date.getDay()) || "Unknown" }
-                        dummy={false}
+                        isDummy={false}
                         />
                     {/if}
                 {/each}
                 <div id="today-block" use:focusOnThis>
                 <Blocks
-                    checked={todayChecked}
+                    isChecked={todayChecked}
                     tgl={currentDate.toDateString()} 
                     day={ dictDate.get(currentDate.getDay()) || "Unknown" }
-                    dummy={false}
+                    isDummy={false}
                 /></div>
             </div>
         </div>
