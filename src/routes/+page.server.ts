@@ -4,7 +4,8 @@ import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {
     try {
-        const users = await db.insert(usersTable).values({ name: 'John Doe', age: 30, email: 'john@example.com' });
+        cookieStore
+        const users = await db.insert(usersTable).values({ id: 1, name: 'John Doe' });
         return { user: users };
     } catch (error) {
         console.error('Error loading data:', error);

@@ -21,6 +21,12 @@
 
 [ ] figure out how to make API calls every 10 minutes
 
+[ ] figure out how to store shit in cookies
+
+[ ] figure out how to get the user's cookies
+
+[ ] how to identify who is who with just cookies
+
 [X] how to extract the day from the date and put it in a corresponding row
 
 [X] how to store the data?? DB
