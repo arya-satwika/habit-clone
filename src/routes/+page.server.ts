@@ -1,7 +1,8 @@
 import { db } from '$lib/server/db/index';
 import { usersTable } from '$lib/server/db/schema';
+import type { PageServerLoad } from './$types';
 
-export async function load() {
+export const load: PageServerLoad = async () => {
     try {
         const users = await db.insert(usersTable).values({ name: 'John Doe', age: 30, email: 'john@example.com' });
         return { user: users };
