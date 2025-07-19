@@ -12,27 +12,8 @@
         })
     }
 
-    let routineData: RoutineData[] = $state([
-        {
-            name: "Morning Routine",
-            id: "1",
-            startDate: "2025-06-01",
-            checkedBlocks: {
-                "2025-06-10": true,
-                "2025-06-20": true
-            }
-        },
-        {
-            name: "Evening Routine",
-            id: "2",
-            startDate: "2025-06-01",
-            checkedBlocks: {
-                "2025-06-11": true,
-                "2025-06-21": true
-            }
-        }
-    ]);
-    
+    let routineData: RoutineData[] = $state(data.routines as RoutineData[]);
+
     function addRoutine( name:string ): RoutineData {   
         return {
             name: name,
@@ -40,6 +21,18 @@
             startDate: new Date().toISOString().slice(0, 10),
             checkedBlocks: {}
         };
+    }
+
+    async function pushToDB() {
+        for ( const routine of routineData ) {
+            await fetch('/api/', {
+                method: 'POST',
+                body: JSON.stringify({ routine, userId: data.users }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        }
     }
 </script>
 
