@@ -12,13 +12,14 @@
         })
     }
 
-    let routineData: RoutineData[] = $state(data.routines as RoutineData[]);
+    let routineData = $state(data.routines || []);
 
     function addRoutine( name:string ): RoutineData {   
         return {
-            name: name,
-            id: Math.random().toString(36).substring(2, 15),
-            startDate: new Date().toISOString().slice(0, 10),
+            title: name,
+            id: Math.random(),
+            startAt: new Date().toISOString().slice(0, 10),
+            userId : data.users? data.users : "",
             checkedBlocks: {}
         };
     }
@@ -62,8 +63,8 @@
 {#each routineData as routine}
     <div class="mb-4 py-4">
         <Container 
-        startDate={routine.startDate} 
-        routineName={routine.name} 
+        startDate={routine.startAt} 
+        routineName={routine.title} 
         checkedBlocks={routine.checkedBlocks} />
     </div>
 {/each}
@@ -74,6 +75,7 @@
      onclick={() => { 
         theName = "";
         showForm = !showForm;
+        console.log("clicked")
      }}
     >
         Add a new routine

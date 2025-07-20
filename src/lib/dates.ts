@@ -10,10 +10,11 @@ export const dictDate = new Map<number, string>([
 
     
 export interface RoutineData {
-        name: string,
-        id: string,
-        startDate: string,
-        checkedBlocks: {},
+        id: number,
+        title: string,
+        startAt: string,
+        userId: string,
+        checkedBlocks: Map<string, boolean>
 }
 
 export function getArrOfDates( start:Date, end:Date ): Date[] {

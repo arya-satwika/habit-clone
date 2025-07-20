@@ -1,18 +1,9 @@
 <script lang="ts">
     import { onMount, type Snippet } from "svelte"
-    import { getArrOfDates } from "../dates";
+    import { getArrOfDates, dictDate } from "../dates";
     import Blocks from "$lib/components/Blocks.svelte";
 
-    const dictDate = new Map<number, string>([
-        [1, "Monday"],
-        [2, "Tuesday"],
-        [3, "Wednesday"],
-        [4, "Thursday"],
-        [5, "Friday"],
-        [6, "Saturday"],
-        [0, "Sunday"]
-       ]);
-    
+ 
     let { 
         routineName = "example routine",
         startDate,
