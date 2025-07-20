@@ -17,15 +17,15 @@
 ## **TO-DOS**
 [X] how to get the date for block that are not stored i.e unchecked blocks
 
-[ ] make a schema and findout how to query
+[X] make a schema and findout how to query
 
 [ ] figure out how to make API calls every 10 minutes
 
-[ ] figure out how to store shit in cookies
+[X] figure out how to store shit in cookies
 
-[ ] figure out how to get the user's cookies
+[X] figure out how to get the user's cookies
 
-[ ] how to identify who is who with just cookies
+[X] how to identify who is who with just cookies
 
 [X] how to extract the day from the date and put it in a corresponding row
 

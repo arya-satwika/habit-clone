@@ -16,8 +16,8 @@ export const load: PageServerLoad = async ({ cookies }) => {
 
             return { users: userId, routines: [] as RoutineData[] };
         }
-        const routineData = await db.query.routines.findMany({
-            where: sql`user_id = ${userId}`,
+        const routineData = await db.query.routinesTable.findMany({
+            where: sql`user_id = ${userId}`
         })
         return { 
             users: userId,

@@ -3,7 +3,7 @@ import { integer, jsonb, pgTable, serial, text } from 'drizzle-orm/pg-core';
 // export const users = pgTable('user', {
 // 	id: serial('id').primaryKey(),
 // });
-export const routines = pgTable('routine', {
+export const routinesTable = pgTable('routine', {
 	id: serial('id').primaryKey(),
 	title: text('title').notNull(),
 	startAt: text('start_at').notNull(),
@@ -42,6 +42,6 @@ export const routines = pgTable('routine', {
 
 
 // export type User = typeof users.$inferSelect;
-export type Routine = typeof routines.$inferSelect;
+export type Routine = typeof routinesTable.$inferSelect;
 // export type CheckedBlock = typeof checkedBlocks.$inferSelect;
 

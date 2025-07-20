@@ -4,7 +4,7 @@
 
     let { data } = $props();
     let showForm: boolean = $state(false);
-    let theName: string = $state("");
+    let theName: string = $state('');
 
     function focusOnThis(node: HTMLElement) {
         $effect(()=> {
@@ -17,24 +17,14 @@
     function addRoutine( name:string ): RoutineData {   
         return {
             title: name,
-            id: Math.random(),
+            id: 100002,
             startAt: new Date().toISOString().slice(0, 10),
-            userId : data.users? data.users : "",
-            checkedBlocks: {}
+            userId : data.users ? data.users : "",
+            checkedBlocks: null
         };
     }
 
-    async function pushToDB() {
-        for ( const routine of routineData ) {
-            await fetch('/api/', {
-                method: 'POST',
-                body: JSON.stringify({ routine, userId: data.users }),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-        }
-    }
+    
 </script>
 
 {#snippet addARoutine()}
@@ -62,10 +52,7 @@
 
 {#each routineData as routine}
     <div class="mb-4 py-4">
-        <Container 
-        startDate={routine.startAt} 
-        routineName={routine.title} 
-        checkedBlocks={routine.checkedBlocks} />
+        <Container routineData={routine} />
     </div>
 {/each}
 <div class="text-center min-w-screen p-4">

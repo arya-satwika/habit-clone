@@ -2,17 +2,9 @@
     import { onMount, type Snippet } from "svelte"
     import { getArrOfDates, dictDate } from "../dates";
     import Blocks from "$lib/components/Blocks.svelte";
+    import type { RoutineData } from "$lib/dates";
 
- 
-    let { 
-        routineName = "example routine",
-        startDate,
-        checkedBlocks
-     }: {
-        routineName: string
-        startDate: string
-        checkedBlocks: {[key: string]: boolean}
-     } = $props();
+    let { routineData }: { routineData: RoutineData } = $props();
 
     function focusOnThis(node: HTMLElement) {
         $effect(()=> {
@@ -26,26 +18,45 @@
     let todayChecked: boolean = $state(false);
     const currentDate:Date = new Date();
     
-    
-    $effect(() => {
+    async function pushToDB() {
+        try {
+            await fetch('/api/', {
+                method: 'POST', 
+                body: JSON.stringify({ routines: routineData }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            console.log("Pushed to DB successfully");
+        } catch (error) {
+            console.error("Error pushing to DB:", error);
+        }
+    };
+    const something = $derived.by(()=> { 
         const key:string = currentDate.toISOString().slice(0, 10);
         if (todayChecked) {
-            checkedBlocks[key] = true;
+            if (!routineData.checkedBlocks) {
+                routineData.checkedBlocks = new Map();
+            }
         } else {
-            delete checkedBlocks[key];
+            routineData.checkedBlocks?.delete(key);
         }
-    });
+        pushToDB();
+    })
+    // $effect(() => {
+        
+    // });
 
     const yesterday:Date = new Date(currentDate);
     yesterday.setDate(currentDate.getDate() - 1);
-    const start:Date = new Date(startDate);
+    const start:Date = new Date(routineData.startAt);
     
     const arrayOfDates:Date[] = getArrOfDates(start, yesterday);
 
 </script>
 
 <div class ="container mx-auto z-30 p-4 flex-flow-col items-start bg-slate-300 rounded-lg">
-    <h1 class= "text-xl font-bold pb-3">{routineName}</h1>
+    <h1 class= "text-xl font-bold pb-3">{routineData.title}</h1>
     <div class="flex flex-cols-2 flex-rows-1 gap-1">
         <span class="grid grid-rows-7 grid-cols-1 grid-flow-col justify-start py-3 px-2">
             <h4 class="font-bold mb-1 py-1 px-1">Mon</h4>
@@ -71,7 +82,7 @@
                         />
                     {:else}
                         <Blocks
-                        isChecked={checkedBlocks[date.toISOString().slice(0, 10)] || false}
+                        isChecked={routineData.checkedBlocks?.has(date.toISOString().slice(0, 10)) || false}
                         tgl={date.toDateString()} 
                         day={ dictDate.get(date.getDay()) || "Unknown" }
                         isDummy={false}
