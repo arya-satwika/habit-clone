@@ -1,10 +1,9 @@
 <script lang="ts">
-    import { onMount, type Snippet } from "svelte"
     import { getArrOfDates, dictDate } from "../dates";
     import Blocks from "$lib/components/Blocks.svelte";
     import type { RoutineData } from "$lib/dates";
 
-    let { routineData }: { routineData: RoutineData } = $props();
+    let { routineData=$bindable() }: { routineData: RoutineData } = $props();
 
     function focusOnThis(node: HTMLElement) {
         $effect(()=> {
@@ -15,37 +14,37 @@
             });
         })
     }
-    let todayChecked: boolean = $state(false);
-    const currentDate:Date = new Date();
-    
-    async function pushToDB() {
-        try {
-            await fetch('/api/', {
-                method: 'POST', 
-                body: JSON.stringify({ routines: routineData }),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-            console.log("Pushed to DB successfully");
-        } catch (error) {
-            console.error("Error pushing to DB:", error);
-        }
+
+    const currentDate = new Date();  
+    const key = currentDate.toISOString().slice(0, 10);
+    let todayChecked: boolean = $state(routineData.checkedBlocks.get(key) || false);
+    async function pushToDB(routines: RoutineData) {
+        const blocksJson = Object.fromEntries(routines.checkedBlocks.entries());
+        const routinesJson = {
+            id: routines.id,
+            title: routines.title,
+            startAt: routines.startAt,
+            userId: routines.userId,
+            checkedBlocks: routineData.checkedBlocks.size > 0 ? blocksJson : {}
+        };
+        console.log("Pushing to DB:", routinesJson);
+        await fetch("/api", {
+            method: "POST",
+            body: JSON.stringify({routinesJson})
+        });
     };
-    const something = $derived.by(()=> { 
-        const key:string = currentDate.toISOString().slice(0, 10);
+
+    $effect(() => {
         if (todayChecked) {
-            if (!routineData.checkedBlocks) {
-                routineData.checkedBlocks = new Map();
-            }
-        } else {
-            routineData.checkedBlocks?.delete(key);
+            routineData.checkedBlocks.set(key, true);
+            console.log("Today is checked:", routineData.checkedBlocks);
+            pushToDB(routineData);
+        } else if (!todayChecked && routineData.checkedBlocks.has(key)) {
+            routineData.checkedBlocks.delete(key);
+            console.log("Today is unchecked:", routineData.checkedBlocks);
+            pushToDB(routineData);
         }
-        pushToDB();
-    })
-    // $effect(() => {
-        
-    // });
+    });
 
     const yesterday:Date = new Date(currentDate);
     yesterday.setDate(currentDate.getDate() - 1);
@@ -91,7 +90,7 @@
                 {/each}
                 <div id="today-block" use:focusOnThis>
                 <Blocks
-                    isChecked={todayChecked}
+                    bind:isChecked={todayChecked}
                     tgl={currentDate.toDateString()} 
                     day={ dictDate.get(currentDate.getDay()) || "Unknown" }
                     isDummy={false}

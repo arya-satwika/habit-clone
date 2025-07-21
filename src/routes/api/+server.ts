@@ -4,23 +4,22 @@ import { db } from "$lib/server/db";
 import { routinesTable } from "$lib/server/db/schema";
 
 export const POST: RequestHandler = async ({ request }) => {
-    const { routines } = await request.json();
-    console.log("Received routine:", routines);
+    const { routinesJson } = await request.json();
     await db
     .insert(routinesTable).values({
-        id: routines.id,
-        title: routines.title,
-        startAt: routines.startAt,
-        userId: routines.userId,
-        checkedBlocks: routines.checkedBlocks
+        id: routinesJson.id,
+        title: routinesJson.title,
+        startAt: routinesJson.startAt,
+        userId: routinesJson.userId,
+        checkedBlocks: routinesJson.checkedBlocks
     })
     .onConflictDoUpdate({
         target: routinesTable.id,
         set: {
-            title: routines.title,
-            startAt: routines.startAt,
-            userId: routines.userId,
-            checkedBlocks: routines.checkedBlocks
+            title: routinesJson.title,
+            startAt: routinesJson.startAt,
+            userId: routinesJson.userId,
+            checkedBlocks: routinesJson.checkedBlocks
         }
     });
 

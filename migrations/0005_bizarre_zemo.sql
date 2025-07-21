@@ -1,0 +1,1 @@
+ALTER TABLE "routine" ALTER COLUMN "checked_blocks" SET NOT NULL;

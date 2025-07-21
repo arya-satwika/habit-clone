@@ -16,13 +16,22 @@ export const load: PageServerLoad = async ({ cookies }) => {
 
             return { users: userId, routines: [] as RoutineData[] };
         }
-        const routineData = await db.query.routinesTable.findMany({
-            where: sql`user_id = ${userId}`
-        })
-        return { 
-            users: userId,
-            routines: routineData
-        };
+        else {
+            const unfilteredRoutines = await db.query.routinesTable.findMany({
+                where: sql`user_id = ${userId}`
+            })
+            const routineData: RoutineData[] = unfilteredRoutines.map(routine => ({
+                id: routine.id,
+                title: routine.title,
+                startAt: routine.startAt,
+                userId: routine.userId,
+                checkedBlocks: new Map<string, boolean>(Object.entries(routine.checkedBlocks as Record<string, boolean>))
+            }));
+            return { 
+                users: userId,
+                routines: routineData
+            };
+        }
     } catch (error) {
         console.error(error);
         return { users: null };

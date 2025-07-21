@@ -1,7 +1,7 @@
 <script lang="ts">
     import tippy, { type Instance } from 'tippy.js';
     let { 
-        isChecked=false, 
+        isChecked=$bindable(), 
         tgl, 
         day,
         isDummy=false

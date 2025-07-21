@@ -14,7 +14,7 @@ export interface RoutineData {
         title: string,
         startAt: string,
         userId: string,
-        checkedBlocks: Map<string, boolean> | null
+        checkedBlocks: Map<string, boolean>
 }
 
 export function getArrOfDates( start:Date, end:Date ): Date[] {

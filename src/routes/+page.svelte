@@ -17,10 +17,10 @@
     function addRoutine( name:string ): RoutineData {   
         return {
             title: name,
-            id: 100002,
+            id: Math.floor(Math.random()*100000),
             startAt: new Date().toISOString().slice(0, 10),
             userId : data.users ? data.users : "",
-            checkedBlocks: null
+            checkedBlocks: new Map<string, boolean>(),
         };
     }
 
@@ -62,7 +62,6 @@
      onclick={() => { 
         theName = "";
         showForm = !showForm;
-        console.log("clicked")
      }}
     >
         Add a new routine

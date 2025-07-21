@@ -9,7 +9,7 @@ export const routinesTable = pgTable('routine', {
 	startAt: text('start_at').notNull(),
 	userId: text('user_id').notNull(),
 		// .references(() => users.id, { onDelete: 'cascade' }),
-	checkedBlocks: jsonb('checked_blocks').$type<Map<string, boolean>>()
+	checkedBlocks: jsonb('checked_blocks').notNull(),
 });
 
 // export const checkedBlocks = pgTable('checked_blocks', {
