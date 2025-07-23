@@ -5,6 +5,7 @@
     import { Label } from "$lib/components/ui/label";
     import { Button, buttonVariants } from "$lib/components/ui/button/index";
     import * as Dialog from "$lib/components/ui/dialog/index";
+	import DialogClose from "$lib/components/ui/dialog/dialog-close.svelte";
 
     let { data } = $props();
     let showForm: boolean = $state(false);
@@ -37,10 +38,14 @@
         <Container routineData={routine} />
     </div>
 {/each}
-<div class="min-w-screen text-center p-4">
+<div class="min-w-max text-center p-4">
     <Dialog.Root>
-    <Dialog.Trigger class={buttonVariants({ variant: "default" })}>Open</Dialog.Trigger>
-    <Dialog.Content>
+    <Dialog.Trigger>
+        <Button class="cursor-pointer transition text-white hover:text-black hover:bg-white">
+            <i class="material-symbols-outlined ">add</i>
+        </Button>
+    </Dialog.Trigger>
+    <Dialog.Content class="bg-slate-100">
         <Dialog.Header>
         <Dialog.Title>Add a new routine</Dialog.Title>
         </Dialog.Header>
@@ -52,16 +57,19 @@
                 bind:value={theName} 
                 class="border p-2 rounded-lg w-80 mb-2"
                 />
-                <Button 
-                class="cursor-pointer bg-green-700 py-2 px-20 rounded-xl text-white" 
-                type="submit" 
-                onclick={() => { 
-                    routineData.push(addRoutine(theName)); 
-                    showForm = false;
-                    theName = "";
-                }}
-                >Add Routine</Button>
+                <Dialog.Close>
+                    <Button 
+                    class="cursor-pointer bg-green-700 py-2 px-20 rounded-xl text-white" 
+                    type="submit" 
+                    onclick={() => { 
+                        routineData.push(addRoutine(theName)); 
+                        showForm = false;
+                        theName = "";
+                    }}
+                    >Add Routine</Button>
+                </Dialog.Close>
             </form>
+            
         </Dialog.Content>
 </Dialog.Root>
 </div>

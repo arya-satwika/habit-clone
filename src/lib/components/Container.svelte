@@ -2,6 +2,7 @@
     import { getArrOfDates, dictDate } from "../dates";
     import Blocks from "$lib/components/Blocks.svelte";
     import type { RoutineData } from "$lib/dates";
+    import { Button } from "$lib/components/ui/button";
 
     let { routineData=$bindable() }: { routineData: RoutineData } = $props();
 
@@ -17,7 +18,9 @@
 
     const currentDate = new Date();  
     const key = currentDate.toISOString().slice(0, 10);
+
     let todayChecked: boolean = $state(routineData.checkedBlocks.get(key) || false);
+    
     async function pushToDB(routines: RoutineData) {
         const blocksJson = Object.fromEntries(routines.checkedBlocks.entries());
         const routinesJson = {
@@ -35,6 +38,7 @@
     };
 
     $effect(() => {
+        pushToDB(routineData);
         if (todayChecked) {
             routineData.checkedBlocks.set(key, true);
             console.log("Today is checked:", routineData.checkedBlocks);
@@ -54,22 +58,30 @@
 
 </script>
 
-<div class ="container mx-auto z-30 p-4 flex-flow-col items-start bg-slate-300 rounded-lg">
-    <h1 class= "text-xl font-bold pb-3">{routineData.title}</h1>
-    <div class="flex flex-cols-2 flex-rows-1 gap-1">
-        <span class="grid grid-rows-7 grid-cols-1 grid-flow-col justify-start py-3 px-2">
-            <h4 class="font-bold mb-1 py-1 px-1">Mon</h4>
-            <h4 class="font-bold mb-1 py-1 px-1">Tue</h4>
-            <h4 class="font-bold mb-1 py-1 px-1">Wed</h4>
-            <h4 class="font-bold mb-1 py-1 px-1">Thu</h4>
-            <h4 class="font-bold mb-1 py-1 px-1">Fri</h4>
-            <h4 class="font-bold mb-1 py-1 px-1">Sat</h4>
-            <h4 class="font-bold mb-1 py-1 px-1">Sun</h4>
+<div class ="container mx-auto z-30 p-4 flex-flow-row items-start bg-slate-700 rounded-lg">
+    <div class ="flex flex-row justify-between items-center w-full mb-4">
+        <h1 class= "text-2xl font-bold text-white">{routineData.title}</h1>
+        <Button
+        onclick={() => { todayChecked = !todayChecked }}
+        class="w-10 h-10 bg-blue-500 cursor-pointer transition text-white hover:text-black"
+        variant="ghost"
+        size="lg"
+        ><i class="material-symbols-outlined">check</i></Button>
+     </div>
+    <div class="flex flex-cols-2 flex-rows-1 gap-1 text-white">
+        <span class="grid grid-rows-7 grid-cols-1 align-middle text-center grid-flow-col justify-start py-3 px-2">
+            <h4 class="pt-2  px-1 h-10">Mon</h4>
+            <h4 class="pt-2 px-1 h-10">Tue</h4>
+            <h4 class="pt-2 px-1 h-10">Wed</h4>
+            <h4 class="pt-2 px-1 h-10">Thu</h4>
+            <h4 class="pt-2 px-1 h-10">Fri</h4>
+            <h4 class="pt-2 px-1 h-10">Sat</h4>
+            <h4 class="pt-2 px-1 h-10">Sun</h4>
         </span>
-        <div id="grid-container" class="overflow-x-auto bg-gray-100 p-4 rounded-lg w-full">
+        <div id="grid-container" class="overflow-x-auto bg-gray-900 p-4 rounded-lg w-full">
             <div 
             id="grid-of-blocks" 
-            class="grid grid-rows-7 grid-flow-col justify-end place-items-center gap-1 min-w-max"
+            class="grid grid-rows-7 grid-flow-col justify-start place-items-center gap-1 min-w-max"
             >
                 {#each arrayOfDates as date}
                     {#if date < start}
@@ -81,7 +93,7 @@
                         />
                     {:else}
                         <Blocks
-                        isChecked={routineData.checkedBlocks?.has(date.toISOString().slice(0, 10)) || false}
+                        isChecked={routineData.checkedBlocks?.get(date.toISOString().slice(0, 10)) || false}
                         tgl={date.toDateString()} 
                         day={ dictDate.get(date.getDay()) || "Unknown" }
                         isDummy={false}
@@ -98,8 +110,5 @@
             </div>
         </div>
     </div>
-    <button
-     onclick={() => { todayChecked = !todayChecked }}
-     class="mt-4 px-4 py-2 bg-blue-500 cursor-pointer"
-     >Toggle</button>
+    
 </div>

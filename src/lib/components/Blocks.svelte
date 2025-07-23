@@ -19,7 +19,7 @@
                     duration: 10,
                     content: tgl,
                     placement: 'right',
-                    theme: 'light',
+                    theme: 'dark',
                     arrow: true
                 });
                 return tooltip.destroy;
@@ -32,8 +32,8 @@
 <div 
     class="w-10 h-10 rounded-lg flex items-center justify-center"
     id="Block"
-    class:bg-red-900={isChecked && !isDummy}
-    class:bg-red-100={!isChecked && !isDummy}
+    class:bg-checked={isChecked && !isDummy}
+    class:bg-unchecked={!isChecked && !isDummy}
     class:bg-transparent={isDummy}
     use:tooltip
 >
