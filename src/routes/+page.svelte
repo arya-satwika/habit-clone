@@ -1,6 +1,10 @@
 <script lang="ts">
     import Container from "$lib/components/Container.svelte";
     import type { RoutineData } from "$lib/dates";
+    import { Input } from "$lib/components/ui/input";
+    import { Label } from "$lib/components/ui/label";
+    import { Button, buttonVariants } from "$lib/components/ui/button/index";
+    import * as Dialog from "$lib/components/ui/dialog/index";
 
     let { data } = $props();
     let showForm: boolean = $state(false);
@@ -27,46 +31,37 @@
     
 </script>
 
-{#snippet addARoutine()}
-    <form action="" class="mb-4 p-4" >
-        <label for="routine-name">Routine Name:</label>
-        <input 
-         type="text" 
-         id="routine-name"
-         bind:value={theName} 
-         use:focusOnThis
-         class="border p-2 rounded-lg w-full mb-2"
-        />
-        <button 
-        class="cursor-pointer bg-green-400 py-2 px-20 rounded-xl text-white" 
-        type="submit" 
-        onclick={() => { 
-            routineData.push(addRoutine(theName)); 
-            showForm = false;
-            theName = "";
-        }}
-        >Add Routine</button>
-    </form>
-{/snippet}
-
 
 {#each routineData as routine}
-    <div class="mb-4 py-4">
+    <div class="mb-4 py-2">
         <Container routineData={routine} />
     </div>
 {/each}
-<div class="text-center min-w-screen p-4">
-    <button 
-     class="cursor-pointer bg-blue-500 py-2 px-6 text-white rounded-lg"
-     type="button" 
-     onclick={() => { 
-        theName = "";
-        showForm = !showForm;
-     }}
-    >
-        Add a new routine
-    </button>
-    {#if showForm}
-        {@render addARoutine()}
-    {/if}
+<div class="min-w-screen text-center p-4">
+    <Dialog.Root>
+    <Dialog.Trigger class={buttonVariants({ variant: "default" })}>Open</Dialog.Trigger>
+    <Dialog.Content>
+        <Dialog.Header>
+        <Dialog.Title>Add a new routine</Dialog.Title>
+        </Dialog.Header>
+            <form action="" class="mb-4 p-4" >
+                <Label for="routine-name" class="mb-2 font-bold">Routine Name</Label>
+                <Input 
+                type="text" 
+                id="routine-name"
+                bind:value={theName} 
+                class="border p-2 rounded-lg w-80 mb-2"
+                />
+                <Button 
+                class="cursor-pointer bg-green-700 py-2 px-20 rounded-xl text-white" 
+                type="submit" 
+                onclick={() => { 
+                    routineData.push(addRoutine(theName)); 
+                    showForm = false;
+                    theName = "";
+                }}
+                >Add Routine</Button>
+            </form>
+        </Dialog.Content>
+</Dialog.Root>
 </div>
