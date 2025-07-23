@@ -19,7 +19,13 @@
 
 [X] make a schema and findout how to query
 
-[ ] figure out how to make API calls every 10 minutes
+[X] figure out how to store to db
+
+[ ] make the add routine menu preetier
+
+[ ] make a delete button for routines
+
+[ ] have icons and color options for routines
 
 [X] figure out how to store shit in cookies
 
