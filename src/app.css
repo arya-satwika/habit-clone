@@ -121,7 +121,8 @@
 
 @theme {
   --color-checked: #4cdffc;
-  --color-unchecked: #508b96;
+  --color-unchecked: #508b96b3;
+  --color-dummy: #508b9640;
 }
 
 @layer base {

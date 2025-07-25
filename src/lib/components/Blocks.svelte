@@ -34,7 +34,7 @@
     id="Block"
     class:bg-checked={isChecked && !isDummy}
     class:bg-unchecked={!isChecked && !isDummy}
-    class:bg-transparent={isDummy}
+    class:bg-dummy={isDummy}
     use:tooltip
 >
 

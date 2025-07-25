@@ -25,7 +25,8 @@ export const load: PageServerLoad = async ({ cookies }) => {
                 title: routine.title,
                 startAt: routine.startAt,
                 userId: routine.userId,
-                checkedBlocks: new Map<string, boolean>(Object.entries(routine.checkedBlocks as Record<string, boolean>))
+                checkedBlocks: new Map<string, boolean>(Object.entries(routine.checkedBlocks as Record<string, boolean>)),
+                icon: routine.icon as 'psychology'|'vape_free'|'pill'|'self_improvement'|'account_balance_wallet'
             }));
             return { 
                 users: userId,

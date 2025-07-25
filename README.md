@@ -8,7 +8,7 @@
 6. have a users table with id
 7. have a routines table that connects to user table via id
 8. have a checked blocks table corresponding to the id of routine data
-## Frontend (this shit done exc no 4)
+## Frontend (this shit done)
 1. each row indicates a day (row 1 = monday ...)
 2. render every block except the today block in a each loop
 3. render the today block outside loop for easy manipulation
@@ -26,6 +26,8 @@
 [ ] make a delete button for routines
 
 [ ] have icons and color options for routines
+
+[ ] make the filled in blocks be dynamic according to size of container
 
 [X] figure out how to store shit in cookies
 

@@ -8,28 +8,35 @@ export const dictDate = new Map<number, string>([
         [7, "Sunday"]
     ]);
 
+export const iconsList = [
+    "psychology",
+    "pill",
+    "self_improvement",
+    "vape_free",
+    "account_balance_wallet"
+];
+
+export type IconType = typeof iconsList[number];
     
 export interface RoutineData {
         id: number,
         title: string,
         startAt: string,
         userId: string,
-        checkedBlocks: Map<string, boolean>
+        checkedBlocks: Map<string, boolean>,
+        icon: IconType,
 }
 
-export function getArrOfDates( start:Date, end:Date ): Date[] {
+export function getArrOfDates( yesterday:Date ): Date[] {
     const dates: Date[] = [];
-    let currentDate = new Date(start);
-    if (start.getDay() !== 1) {
-        currentDate.setDate(start.getDate()-start.getDay()+1)
+    let max = new Date(yesterday);
+    max.setDate(yesterday.getDate() - 91);
+    if (yesterday.getDay() !== 6) {
+        max.setDate(max.getDate() - yesterday.getDay() + 1);
     }
-    while (currentDate <= end) {
-        dates.push(new Date(currentDate));
-        currentDate.setDate(currentDate.getDate() + 1);
+    while (max <= yesterday) {
+        dates.push(new Date(max));
+        max.setDate(max.getDate() + 1);
     }
     return dates;
-}
-
-export function saveAllRoutine(routineData: RoutineData[]): void {
-    localStorage.setItem('routineData', JSON.stringify(routineData));
 }

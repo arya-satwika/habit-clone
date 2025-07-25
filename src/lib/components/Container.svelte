@@ -28,7 +28,9 @@
             title: routines.title,
             startAt: routines.startAt,
             userId: routines.userId,
-            checkedBlocks: routineData.checkedBlocks.size > 0 ? blocksJson : {}
+            checkedBlocks: routineData.checkedBlocks.size > 0 ? blocksJson : {},
+            icon: routines.icon
+
         };
         console.log("Pushing to DB:", routinesJson);
         await fetch("/api", {
@@ -43,10 +45,12 @@
             routineData.checkedBlocks.set(key, true);
             console.log("Today is checked:", routineData.checkedBlocks);
             pushToDB(routineData);
+            return;
         } else if (!todayChecked && routineData.checkedBlocks.has(key)) {
             routineData.checkedBlocks.delete(key);
             console.log("Today is unchecked:", routineData.checkedBlocks);
             pushToDB(routineData);
+            return;
         }
     });
 
@@ -54,16 +58,19 @@
     yesterday.setDate(currentDate.getDate() - 1);
     const start:Date = new Date(routineData.startAt);
     
-    const arrayOfDates:Date[] = getArrOfDates(start, yesterday);
+    const arrayOfDates:Date[] = getArrOfDates(yesterday);
 
 </script>
 
-<div class ="container mx-auto z-30 p-4 flex-flow-row items-start bg-slate-700 rounded-lg">
-    <div class ="flex flex-row justify-between items-center w-full mb-4">
+<div class ="mx-auto z-30 p-4 flex-flow-row items-start bg-slate-700 rounded-lg">
+    <div id="routine-header" class ="flex flex-row gap-2 justify-between w-full mb-4">
+        <div class="w-10 h-10 bg-gray-100 flex items-center justify-center rounded-lg">
+            <span class="material-symbols-outlined">{routineData.icon}</span>
+        </div>
         <h1 class= "text-2xl font-bold text-white">{routineData.title}</h1>
         <Button
         onclick={() => { todayChecked = !todayChecked }}
-        class="w-10 h-10 bg-blue-500 cursor-pointer transition text-white hover:text-black"
+        class="w-10 h-10 bg-blue-500 order-03 cursor-pointer transition text-white hover:text-black"
         variant="ghost"
         size="lg"
         ><i class="material-symbols-outlined">check</i></Button>

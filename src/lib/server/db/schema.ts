@@ -10,6 +10,7 @@ export const routinesTable = pgTable('routine', {
 	userId: text('user_id').notNull(),
 		// .references(() => users.id, { onDelete: 'cascade' }),
 	checkedBlocks: jsonb('checked_blocks').notNull(),
+	icon: text('icon').notNull()
 });
 
 // export const checkedBlocks = pgTable('checked_blocks', {

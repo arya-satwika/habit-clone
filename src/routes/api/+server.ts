@@ -11,7 +11,8 @@ export const POST: RequestHandler = async ({ request }) => {
         title: routinesJson.title,
         startAt: routinesJson.startAt,
         userId: routinesJson.userId,
-        checkedBlocks: routinesJson.checkedBlocks
+        checkedBlocks: routinesJson.checkedBlocks,
+        icon: routinesJson.icon
     })
     .onConflictDoUpdate({
         target: routinesTable.id,
@@ -19,7 +20,8 @@ export const POST: RequestHandler = async ({ request }) => {
             title: routinesJson.title,
             startAt: routinesJson.startAt,
             userId: routinesJson.userId,
-            checkedBlocks: routinesJson.checkedBlocks
+            checkedBlocks: routinesJson.checkedBlocks,
+            icon: routinesJson.icon
         }
     });
 
