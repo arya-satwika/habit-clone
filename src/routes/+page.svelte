@@ -53,49 +53,48 @@
     </div>
 {/snippet}
 
-<div class="flex flex-row flex-wrap flex-col-2 gap-1 items-center justify-start py-2 w-screen">    
+<div class="grid sm:grid-cols-1 xl:grid-cols-1 2xl:grid-cols-2 auto-rows gap-1 items-center justify-start py-2">    
     {#each routineData as routine}
-        <div class="mb-4 py-2">
-            <Container routineData={routine} />
-        </div>
-    {/each}
-
-
-
-    <div class="min-w-max text-center p-4">
-        <Dialog.Root>
-        <Dialog.Trigger>
-            <Button class="cursor-pointer transition text-white hover:text-black hover:bg-white">
-                <span class="material-symbols-outlined">add</span>
-            </Button>
-        </Dialog.Trigger>
-        <Dialog.Content class="bg-slate-900">
-            <Dialog.Header>
-                <Dialog.Title class="text-white">Add a new routine</Dialog.Title>
-            </Dialog.Header>
-                <form action="" class="mb-4 p-4" >
-                    <Label for="routine-name" class="mb-2 font-bold text-white">Routine Name</Label>
-                    <Input 
-                    type="text" 
-                    id="routine-name"
-                    bind:value={nameForm} 
-                    class="border p-2 rounded-lg w-80 mb-2"
-                    />
-                    {@render iconSelect()}
-                    <Dialog.Close>
-                        <Button 
-                        class="cursor-pointer bg-green-700 py-2 px-20 rounded-xl text-white" 
-                        type="submit" 
-                        onclick={() => { 
-                            routineData.push(addRoutine(nameForm)); 
-                            showForm = false;
-                            nameForm = "";
-                        }}
-                        >Add Routine</Button>
-                    </Dialog.Close>
-                </form>
-                
-            </Dialog.Content>
-    </Dialog.Root>
+    <div class="py-2">
+        <Container routineData={routine} />
     </div>
+    {/each}
+    
+</div>
+
+<div class="min-w-max text-center p-4">
+    <Dialog.Root>
+    <Dialog.Trigger>
+        <Button class="cursor-pointer transition bg-slate-700 text-white hover:text-black hover:bg-white">
+            <span class="material-symbols-outlined">add</span>
+        </Button>
+    </Dialog.Trigger>
+    <Dialog.Content class="bg-slate-900 border-1 border-dummy">
+        <Dialog.Header>
+            <Dialog.Title class="text-white">Add a new routine</Dialog.Title>
+        </Dialog.Header>
+            <form action="" class="mb-4 p-4" >
+                <Label for="routine-name" class="mb-2 font-bold text-white">Routine Name</Label>
+                <Input 
+                type="text" 
+                id="routine-name"
+                bind:value={nameForm} 
+                class="border p-2 rounded-lg w-80 mb-2"
+                />
+                {@render iconSelect()}
+                <Dialog.Close>
+                    <Button 
+                    class="cursor-pointer bg-green-700 py-2 px-20 rounded-xl text-white" 
+                    type="submit" 
+                    onclick={() => { 
+                        routineData.push(addRoutine(nameForm)); 
+                        showForm = false;
+                        nameForm = "";
+                    }}
+                    >Add Routine</Button>
+                </Dialog.Close>
+            </form>
+            
+        </Dialog.Content>
+</Dialog.Root>
 </div>
