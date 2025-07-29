@@ -8,7 +8,9 @@ export const dictDate = new Map<number, string>([
         [7, "Sunday"]
     ]);
 
-export const iconsList = [
+export type IconType = 'psychology' | 'pill' | 'self_improvement' | 'vape_free' | 'account_balance_wallet';
+
+export const iconsList: IconType[] = [
     "psychology",
     "pill",
     "self_improvement",
@@ -16,8 +18,7 @@ export const iconsList = [
     "account_balance_wallet"
 ];
 
-export type IconType = typeof iconsList[number];
-    
+
 export interface RoutineData {
         id: number,
         title: string,

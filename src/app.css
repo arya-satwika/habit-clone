@@ -131,8 +131,8 @@
   }
   body {
     @apply bg-background text-foreground;
-    margin: 30px auto;
-		max-width: 800px;
+    /* margin: 30px auto; */
+		/* max-width: 800px; */
 		background-color: #1d1f20;
 		color: #212529;
   }

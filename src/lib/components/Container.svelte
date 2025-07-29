@@ -62,7 +62,7 @@
 
 </script>
 
-<div class ="mx-auto z-30 p-4 flex-flow-row items-start bg-slate-700 rounded-lg">
+<div class ="mx-auto z-30 p-4 flex-flow-row items-start bg-slate-700 rounded-lg w-183.5">
     <div id="routine-header" class ="flex flex-row gap-2 justify-between w-full mb-4">
         <div class="w-10 h-10 bg-gray-100 flex items-center justify-center rounded-lg">
             <span class="material-symbols-outlined">{routineData.icon}</span>
