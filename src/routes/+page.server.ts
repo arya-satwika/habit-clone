@@ -1,7 +1,7 @@
 import { db } from '$lib/server/db/index';
 import { sql } from 'drizzle-orm';
 import type { PageServerLoad } from './$types';
-import type { RoutineData } from '$lib/dates';
+import type { RoutineData, IconType } from '$lib/dates';
 
 
 export const load: PageServerLoad = async ({ cookies }) => {
@@ -26,7 +26,7 @@ export const load: PageServerLoad = async ({ cookies }) => {
                 startAt: routine.startAt,
                 userId: routine.userId,
                 checkedBlocks: new Map<string, boolean>(Object.entries(routine.checkedBlocks as Record<string, boolean>)),
-                icon: routine.icon as 'psychology'|'vape_free'|'pill'|'self_improvement'|'account_balance_wallet'
+                icon: routine.icon as IconType
             }));
             return { 
                 users: userId,
