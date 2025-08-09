@@ -14,7 +14,6 @@
     let nameForm: string = $state('');
     let iconForm: IconType = $state(iconsList[0]);
 
-
     function focusOnThis(node: HTMLElement) {
         $effect(()=> {
             node.focus();
@@ -37,18 +36,18 @@
     
 </script>
 {#snippet iconSelect()}
-<div class="text-white flex flex-row items-center gap-1 justify-start py-2">
-    {#each iconsList as icon}
-        <button onclick={() => {
-            iconForm = icon as typeof iconForm;
-            }}
-        class="cursor-pointer p-1 rounded-sm transition hover:bg-slate-600"
-        class:bg-slate-600={iconForm === icon}
-        class:bg-slate-800={!iconForm || iconForm !== icon}>
-            <span  
-            style="font-size: 32px;"
-            class="material-symbols-outlined">{icon}</span>
-        </button>
+    <div class="text-white flex flex-row items-center gap-1 justify-start py-2">
+        {#each iconsList as icon}
+            <button onclick={() => {
+                iconForm = icon as typeof iconForm;
+                }}
+            class="cursor-pointer p-1 rounded-sm transition hover:bg-slate-600"
+            class:bg-slate-600={iconForm === icon}
+            class:bg-slate-800={!iconForm || iconForm !== icon}>
+                <span  
+                style="font-size: 32px;"
+                class="material-symbols-outlined">{icon}</span>
+            </button>
         {/each}
     </div>
 {/snippet}
