@@ -13,6 +13,7 @@
     let showForm: boolean = $state(false);
     let nameForm: string = $state('');
     let iconForm: IconType = $state(iconsList[0]);
+    const userId = data.users ? data.users : "undefined";
 
     function focusOnThis(node: HTMLElement) {
         $effect(()=> {
@@ -35,6 +36,9 @@
 
     
 </script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+</style>
 {#snippet iconSelect()}
     <div class="text-white flex flex-row items-center gap-1 justify-start py-2">
         {#each iconsList as icon}
@@ -51,7 +55,10 @@
         {/each}
     </div>
 {/snippet}
-
+<div id="routine-header" class="w-screen bg-slate-700 flex flex-row justify-between">
+    <h1 class="text-white px-4 py-3 font-bold    text-3xl"style="font-family: 'Roboto Mono'">habitclone</h1>
+    <h1 class="text-white px-4 py-3 items-end"><span class="font-bold">User ID: </span> {userId}</h1>
+</div>
 <div class="grid sm:grid-cols-1 xl:grid-cols-1 2xl:grid-cols-2 auto-rows gap-1 items-center justify-start py-2">    
     {#each routineData as routine}
     <div class="py-2">
