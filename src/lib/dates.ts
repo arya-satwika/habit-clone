@@ -32,7 +32,7 @@ export function getArrOfDates( yesterday:Date ): Date[] {
     const dates: Date[] = [];
     let max = new Date(yesterday);
     max.setDate(yesterday.getDate() - 91);
-    if (yesterday.getDay() !== 6) {
+    if (yesterday.getDay() !== 7) {
         max.setDate(max.getDate() - yesterday.getDay() + 1);
     }
     while (max <= yesterday) {
