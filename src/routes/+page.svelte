@@ -1,13 +1,13 @@
 <script lang="ts">
     import Container from "$lib/components/Container.svelte";
     import type { RoutineData, IconType } from "$lib/dates";
+    import tippy, { type Instance } from 'tippy.js';
     import { iconsList } from "$lib/dates";
     import { Input } from "$lib/components/ui/input";
     import { Label } from "$lib/components/ui/label";
     import { Button } from "$lib/components/ui/button/index";
     import * as Dialog from "$lib/components/ui/dialog/index";
-    
-    
+	import { invalidateAll } from "$app/navigation";
     
     let { data } = $props();
     let showForm: boolean = $state(false);
@@ -19,6 +19,36 @@
         $effect(()=> {
             node.focus();
         })
+    }
+
+    function tooltip(node: HTMLElement, content: string) {
+        $effect(() => {
+            const tooltip:Instance = tippy(node, {
+                duration: 20,
+                content: content,
+                placement: 'bottom',
+                theme: 'dark',
+                arrow: true
+            });
+            return tooltip.destroy;
+        });
+    }
+    async function handleDelete(id:number){
+        const toDelete = routineData.find(routine => routine.id === id);
+        if (toDelete) {
+            routineData.splice(routineData.indexOf(toDelete), 1);
+            routineData = routineData;
+            console.log("Deleted routine:", toDelete);
+        }
+        else {
+            console.error("Routine not found for deletion:", id);
+        }
+        await fetch("/api", {
+            method: "DELETE",
+            body: JSON.stringify({ id })
+        });
+        await invalidateAll();
+        console.log("Delete routine with ID:", id);
     }
 
     let routineData = $state(data.routines || []);
@@ -36,14 +66,12 @@
 
     
 </script>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
-</style>
+
 {#snippet iconSelect()}
     <div class="text-white flex flex-row items-center gap-1 justify-start py-2">
         {#each iconsList as icon}
-            <button onclick={() => {
-                iconForm = icon as typeof iconForm;
+            <button type="button" onclick={() => {
+                iconForm = icon;
                 }}
             class="cursor-pointer p-1 rounded-sm transition hover:bg-slate-600"
             class:bg-slate-600={iconForm === icon}
@@ -55,14 +83,37 @@
         {/each}
     </div>
 {/snippet}
+
+
 <div id="routine-header" class="w-screen bg-slate-700 flex flex-row justify-between">
-    <h1 class="text-white px-4 py-3 font-bold    text-3xl"style="font-family: 'Roboto Mono'">habitclone</h1>
-    <h1 class="text-white px-4 py-3 items-end"><span class="font-bold">User ID: </span> {userId}</h1>
+    <h1 class="text-white px-4 py-3 font-bold text-3xl"style="font-family: 'Roboto Mono'">habitclone</h1>
+    <div class="px-4 py-3 text-white flex flex-row items-center gap-2">
+        <button 
+            class="cursor-pointer pt-1 text-blue-200"
+            onclick={() => {
+                        navigator.clipboard.writeText(userId);
+                    }}
+            use:tooltip={"Copy UserID"}
+            >
+            <i class="material-symbols-outlined">content_copy</i>
+        </button>
+        <form method="POST" action="?/login">
+            <h1><span class="font-bold">User ID: </span>
+                <input 
+                name="userId"
+                class= "w-30 underline active:hover:border-0" 
+                type="text"
+                value={userId}
+                >
+            </h1>
+        </form>
+    </div>
 </div>
+
 <div class="grid sm:grid-cols-1 xl:grid-cols-1 2xl:grid-cols-2 auto-rows gap-1 items-center justify-start py-2">    
     {#each routineData as routine}
     <div class="py-2">
-        <Container routineData={routine} />
+        <Container routineData={routine} handleDelete={()=>{handleDelete(routine.id)}} />
     </div>
     {/each}
     

@@ -27,8 +27,6 @@
 
 [ ] have icons and color options for routines
 
-[ ] make the filled in blocks be dynamic according to size of container
-
 [X] figure out how to store shit in cookies
 
 [X] figure out how to get the user's cookies

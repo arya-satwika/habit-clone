@@ -30,7 +30,7 @@
 		"@tailwindcss/vite": "^4.0.0",
 		"@types/node": "^22",
 		"@types/ws": "^8.18.1",
-		"bits-ui": "^2.8.11",
+		"bits-ui": "^2.9.3",
 		"clsx": "^2.1.1",
 		"drizzle-kit": "^0.18.1",
 		"eslint": "^9.18.0",

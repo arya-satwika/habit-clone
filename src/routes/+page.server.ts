@@ -1,8 +1,8 @@
 import { db } from '$lib/server/db/index';
 import { sql } from 'drizzle-orm';
-import type { PageServerLoad } from './$types';
+import type { PageServerLoad, Actions } from './$types';
+import { redirect } from '@sveltejs/kit';
 import type { RoutineData, IconType } from '$lib/dates';
-
 
 export const load: PageServerLoad = async ({ cookies }) => {
     try {
@@ -38,3 +38,15 @@ export const load: PageServerLoad = async ({ cookies }) => {
         return { users: null };
     }
 }   
+
+export const actions: Actions = {
+    login: async({ cookies, request }) => {
+        const data = await request.formData();
+        const userId = data.get('userId');
+        cookies.set('user', userId as string, {
+            path: '/',
+            httpOnly: true
+        });
+        throw redirect(303, '/');
+    }
+}
